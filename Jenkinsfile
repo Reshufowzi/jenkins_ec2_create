@@ -6,54 +6,45 @@ pipeline {
     }
 
     stages {
-
-        stage('Checkout Code') {
+        stage('Checkout') {
             steps {
-                git url: 'https://github.com/Reshufowzi/jenkins_ec2_create.git', branch: 'main'
+                git branch: 'main',
+                    url: 'https://github.com/Reshufowzi/jenkins_ec2_create.git'
             }
         }
 
         stage('Terraform Init') {
             steps {
-                withCredentials([[
-                    $class: 'AmazonWebServicesCredentialsBinding',
-                    credentialsId: 'aws-creds'
-                ]]) {
-                    sh '''
-                        cd infra
-                        terraform init
-                    '''
+                withCredentials([
+                    [$class: 'AmazonWebServicesCredentialsBinding',
+                     credentialsId: 'aws-creds']
+                ]) {
+                    sh 'cd terraform && terraform init'
                 }
             }
         }
 
         stage('Terraform Plan') {
             steps {
-                withCredentials([[
-                    $class: 'AmazonWebServicesCredentialsBinding',
-                    credentialsId: 'aws-creds'
-                ]]) {
-                    sh '''
-                        cd infra
-                        terraform plan
-                    '''
+                withCredentials([
+                    [$class: 'AmazonWebServicesCredentialsBinding',
+                     credentialsId: 'aws-creds']
+                ]) {
+                    sh 'cd terraform && terraform plan'
                 }
             }
         }
 
         stage('Terraform Apply') {
             steps {
-                withCredentials([[
-                    $class: 'AmazonWebServicesCredentialsBinding',
-                    credentialsId: 'aws-creds'
-                ]]) {
-                    sh '''
-                        cd infra
-                        terraform apply -auto-approve
-                    '''
+                withCredentials([
+                    [$class: 'AmazonWebServicesCredentialsBinding',
+                     credentialsId: 'aws-creds']
+                ]) {
+                    sh 'cd terraform && terraform apply -auto-approve'
                 }
             }
-        }
-    }
+        }
+    }
 }
 
