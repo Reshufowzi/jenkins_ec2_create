@@ -33,5 +33,6 @@ resource "aws_instance" "web" {
 
   tags = {
     Name = "Jenkins-Web-Server"
-  }
+  }
 }
+
