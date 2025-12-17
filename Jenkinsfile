@@ -19,7 +19,7 @@ pipeline {
                     [$class: 'AmazonWebServicesCredentialsBinding',
                      credentialsId: 'aws-creds']
                 ]) {
-                    sh 'cd terraform && terraform init'
+                    sh 'cd infra && terraform init'
                 }
             }
         }
@@ -30,7 +30,7 @@ pipeline {
                     [$class: 'AmazonWebServicesCredentialsBinding',
                      credentialsId: 'aws-creds']
                 ]) {
-                    sh 'cd terraform && terraform plan'
+                    sh 'cd infra && terraform plan'
                 }
             }
         }
@@ -41,7 +41,7 @@ pipeline {
                     [$class: 'AmazonWebServicesCredentialsBinding',
                      credentialsId: 'aws-creds']
                 ]) {
-                    sh 'cd terraform && terraform apply -auto-approve'
+                    sh 'cd infra && terraform apply -auto-approve'
                 }
             }
         }
