@@ -6,12 +6,6 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                git branch: 'main',
-                    url: 'https://github.com/Reshufowzi/jenkins_ec2_create.git'
-            }
-        }
 
         stage('Terraform Init') {
             steps {
